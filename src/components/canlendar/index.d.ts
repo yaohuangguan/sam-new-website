@@ -1,3 +1,5 @@
-export interface CanlendarLayoutProps {
+export interface CanlendarLayoutProps {}
 
+export interface UnitProps {
+  date: Date;
 }
