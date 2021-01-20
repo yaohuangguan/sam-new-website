@@ -19,20 +19,7 @@ axios.interceptors.request.use(request => {
   console.log('interceptors request error')
 })
 
-/**
- * 响应拦截
- * 说明
- * code "0" 为成功
- * code "-1" 为失败
- * code "-999" token为空，请重新登录
- * code "-998" token过期，请重新登录
- * code "-997" 您的账号在其他设备登录，若非本人操作请注意修改密码
- * code "-996" 您的账户已被冻结，若有疑问请联系客服
- * code "-994" 邀约失效，您可联系投顾经理详细咨询
- * 
- * code "0" msgKey "-995" 领航者无账号，跳转到预约咨询页面
- * code "0" msgKey "-994" 邀约失效，您可联系投顾经理详细咨询
- */
+// TODO
 axios.interceptors.response.use(response => {
   // console.log('axios.interceptors.response', response)
   switch (response.data.code) {

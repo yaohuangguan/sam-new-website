@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { matchPath } from 'react-router'
-import uuidv4 from 'uuid/v4'
+import uuidv4 from 'uuid/dist/v4'
 import { Route } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { Provider } from 'react-redux'
