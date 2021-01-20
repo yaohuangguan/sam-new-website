@@ -1,3 +1,25 @@
-import Main from './pages/main'
+import React, { useState, useEffect } from 'react'
+import {
+    BrowserRouter as Router,
+    Route
+} from "react-router-dom";
 
-export default Main;
+import { renderRoutes, routes, handleResizeDocument } from './utils'
+
+export function App() {
+    const [rect, setRect] = useState(handleResizeDocument())
+
+    useEffect(function () {
+        const resizeFn = () => setRect(handleResizeDocument())
+        window.addEventListener('resize', resizeFn)
+        window.addEventListener('orientationchange', resizeFn)
+    }, [])
+
+    return (
+        <Router>
+            {renderRoutes(routes, { rect })}
+        </Router>
+    )
+}
+
+export default App;
