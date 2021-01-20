@@ -7,17 +7,19 @@ export default function Splash(props: RouterProps) {
     const [seconds, setSeconds] = useState(1)
     useEffect(() => {
         const next = seconds + 1
-        if (next < 3) {
-            const ik = window.setInterval(() => {
+        let tk = 0
+        tk = window.setTimeout(() => {
+            if (next < 3) {
                 setSeconds(next)
-            }, 1000)
-            return () => {
-                clearInterval(ik)
+            } else {
+                props.history.replace('/main')
             }
-        } else {
-            props.history.push('/main')
+        }, 1000)
+        return () => {
+            tk && clearInterval(tk)
         }
-    }, [])
+    }, [seconds])
+
     return (
         <div className={s.layout}>
             Splash {seconds}
