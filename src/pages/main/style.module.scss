@@ -3,8 +3,12 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  background-color: #f9f7f3;
   &-t {
     height: 48px;
+    padding: 24px 0 12px;
+    display: flex;
+    flex-direction: column;
   }
   &-c {
     flex-shrink: 0;
@@ -12,5 +16,48 @@
   &-b {
     flex: 1;
     overflow: auto;
+  }
+}
+
+.setting {
+  height: 100%;
+  padding: 0 16px;
+  align-self: flex-end;
+  line-height: 48px;
+  display: flex;
+  align-items: center;
+  .setting-icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.25);
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  .l {
+    flex-shrink: 0;
+  }
+  .c {
+    flex: 1;
+  }
+  .r {
+    flex-shrink: 0;
+  }
+}
+
+.tools {
+  list-style: none;
+  margin: 0;
+  padding: 24px 0 12px;
+  .tool {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px;
+    border-top: 1px solid #eaeaea;
   }
 }

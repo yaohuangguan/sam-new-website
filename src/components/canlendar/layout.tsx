@@ -5,35 +5,47 @@ import dayjs from 'dayjs'
 
 // 基础新历渲染器
 export function DefaultDateUnitRenderer(props: UnitProps) {
+    const { date } = props
     return (
-        <span></span>
+        <div className={s["unit"]}>
+            <div className={s["base"]}>
+                {date ? date.get('date') : null}
+            </div>
+        </div>
     )
 }
-
 
 // 日历网格
 export function CanlendarLayout(props: CanlendarLayoutProps) {
 
+    const weeks = `日一二三四五六`.split('')
+
+    // 这个月
     const [currentDate, setCurrentDate] = useState(dayjs())
 
-    const indexOfMonth = currentDate.get('month')
-    const indexOfWeek = currentDate.get('day')
-
-    const units = new Array(31).fill(0)
+    const firstDate = currentDate.startOf("month")
+    const lastDate = currentDate.endOf('month')
+    const indexOfFirstDate = firstDate.get('day')
+    const indexOfLastDate = lastDate.get('day')
+    const units = []
+    let headUnit = dayjs(firstDate).add(-indexOfFirstDate, 'day')
+    let tailUnit = dayjs(lastDate).add(6 - indexOfLastDate, 'day')
+    while (headUnit < tailUnit) {
+        units.push(headUnit)
+        headUnit = headUnit.add(1, 'day')
+    }
 
     return (
         <div className={s.layout}>
-            <div>{currentDate.format('YYYY-MM-DD HH:mm:ss')}</div>
-            <div>{indexOfMonth}</div>
-            <div>{indexOfWeek}</div>
+            <div className={s["days"]}>
+                {weeks.map((item: any, index) => (
+                    <div key={index} className={s["day"]}>{item}</div>
+                ))}
+            </div>
             <div className={s["units"]}>
                 {
                     units.map((item: any, index: number) => (
-                        <div key={index} className={s["unit"]}>
-                            <div className={s["base"]}>
-                                {index + 1}
-                            </div>
-                        </div>
+                        <DefaultDateUnitRenderer key={index} date={item} />
                     ))
                 }
             </div>
