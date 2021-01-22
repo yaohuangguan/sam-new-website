@@ -112,35 +112,35 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
 
   return (
     <div className={s.layout}>
-      <div className={s["title"]}>
-        <div className={s["l"]}>{baseDateFormat}</div>
-        <div className={s["c"]}></div>
-        <div className={s["r"]}>
-          <ImageIcons
-            size={32}
-            className={s["prev"]}
-            type='arrow-left'
-            onClick={handleGoPrevMonth}
-          />
-          <ImageIcons
-            size={32}
-            className={s["next"]}
-            type='arrow-right'
-            onClick={handleGoNextMonth}
-          />
-        </div>
+      <div className={s.title}>
+        <div className={s.left}>{baseDateFormat}</div>
+        <div className={s.center}></div>
       </div>
-      <div className={s["days"]}>
+      <div className={s.days}>
         {weeks.map((item: any, index) => (
-          <div key={index} className={s["day"]}>
+          <div key={index} className={s.day}>
             {item}
           </div>
         ))}
       </div>
-      <div className={s["units"]}>
+      <div className={s.units}>
         {units.map((item: any, index: number) => (
           <DefaultDateUnitRenderer key={index} {...item} />
         ))}
+      </div>
+      <div className={s.right_icons}>
+        <ImageIcons
+          size={32}
+          className={s.prev}
+          type="arrow-left"
+          onClick={handleGoPrevMonth}
+        />
+        <ImageIcons
+          size={32}
+          className={s.next}
+          type="arrow-right"
+          onClick={handleGoNextMonth}
+        />
       </div>
     </div>
   );
