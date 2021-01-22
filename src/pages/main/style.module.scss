@@ -21,7 +21,6 @@
 
 .setting {
   height: 100%;
-  padding: 0 16px;
   align-self: flex-end;
   line-height: 48px;
   display: flex;
@@ -38,13 +37,16 @@
 .title {
   display: flex;
   align-items: center;
+  padding: 0 16px;
   .l {
     flex-shrink: 0;
+    margin-right: 12px;
   }
   .c {
     flex: 1;
   }
   .r {
+    margin-left: 12px;
     flex-shrink: 0;
   }
 }
