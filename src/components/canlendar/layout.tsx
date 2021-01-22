@@ -5,6 +5,8 @@ import { ImageIcons } from "../../utils/dom-assets/index";
 import s from "./layout.module.scss";
 import dayjs, { Dayjs } from "dayjs";
 
+import { DefaultMarkRenderer } from '../renders/mark'
+
 // @ts-ignore
 import lunar from '@tony801015/chinese-lunar'
 
@@ -43,7 +45,6 @@ const DefaultLunarRenderer = (props: any) => {
     )
 }
 
-
 // Unit渲染器
 export function DefaultDateUnitRenderer(props: UnitProps) {
     const renderMaps = {
@@ -56,6 +57,7 @@ export function DefaultDateUnitRenderer(props: UnitProps) {
                 ],
             },
             DefaultTodayRenderer,
+            DefaultMarkRenderer,
             DefaultBaseRenderer,
             DefaultUnitRenderer,
         ]
@@ -123,7 +125,8 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
             tunits.push({
                 date: headUnit,
                 isToday: headUnit.isSame(currentDate),
-                isInMonth: headUnit.isSame(baseDate, "month")
+                isInMonth: headUnit.isSame(baseDate, "month"),
+                marks: [0, 1]
             })
             headUnit = headUnit.add(1, 'day')
         }
