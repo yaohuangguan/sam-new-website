@@ -1,19 +1,22 @@
-import React, { useState, useEffect, PropsWithChildren, useMemo } from 'react';
-import cn from 'classnames'
-import { CanlendarLayoutProps, UnitProps } from './index'
-import s from './layout.module.scss'
-import dayjs from 'dayjs'
+import React, { useState, useEffect, PropsWithChildren, useMemo } from "react";
+import cn from "classnames";
+import { CanlendarLayoutProps, UnitProps } from "./index";
+import { ImageIcons } from "../../utils/dom-assets/index";
+import s from "./layout.module.scss";
+import dayjs from "dayjs";
 
 // @ts-ignore
 import lunar from '@tony801015/chinese-lunar'
 
 // 网格渲染器
-const DefaultUnitRenderer = (props: any) =>
+const DefaultUnitRenderer = (props: any) => (
     <div className={s["unit"]}>{props.children}</div>
+);
 
 // 网格基准渲染器
-const DefaultBaseRenderer = (props: any) =>
+const DefaultBaseRenderer = (props: any) => (
     <div className={s["base"]}>{props.children}</div>
+);
 
 // 今日数字渲染器
 const DefaultTodayRenderer = (props: any) =>
@@ -85,18 +88,20 @@ export function DefaultDateUnitRenderer(props: UnitProps) {
 // 日历网格
 export function CanlendarLayout(props: CanlendarLayoutProps) {
     // props
-    const { settings } = props
-    const { firstDayToShow } = settings
+    const { settings } = props;
+    const { firstDayToShow } = settings;
 
     // states
     // 星期
-    let weeks = `日一二三四五六`.split('')
-    weeks = weeks.concat(weeks.splice(0, firstDayToShow))
+    let weeks = `日一二三四五六`.split("");
+    weeks = weeks.concat(weeks.splice(0, firstDayToShow));
 
     // 这个月
-    const [currentDate, setCurrentDate] = useState(dayjs(dayjs().startOf("date")))
-    const [baseDate, setBaseDate] = useState(currentDate)
-    const [units, setUnits] = useState<any>([])
+    const [currentDate, setCurrentDate] = useState(
+        dayjs(dayjs().startOf("date"))
+    );
+    const [baseDate, setBaseDate] = useState(currentDate);
+    const [units, setUnits] = useState<any>([]);
 
     // @notice unit test dont delete
     // const [units, setUnits] = useState<any>([{
@@ -127,7 +132,7 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
     }, [baseDate])
 
     // memos
-    const baseDateFormat = useMemo(() => baseDate.format('YYYY-MM'), [baseDate])
+    const baseDateFormat = useMemo(() => baseDate.format("YYYY-MM"), [baseDate]);
 
     // functions
     function handleGoPrevMonth() {
@@ -148,26 +153,36 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
 
     return (
         <div className={s.layout}>
-            <div className={s['title']}>
-                <div className={s["l"]}>{baseDateFormat}</div>
-                <div className={s["c"]}></div>
-                <div className={s["r"]}>
-                    <div className={s["prev"]} onClick={handleGoPrevMonth} />
-                    <div className={s["next"]} onClick={handleGoNextMonth} />
-                </div>
+            <div className={s.title}>
+                <div className={s.left}>{baseDateFormat}</div>
+                <div className={s.center}></div>
             </div>
-            <div className={s["days"]}>
+            <div className={s.days}>
                 {weeks.map((item: any, index) => (
-                    <div key={index} className={s["day"]}>{item}</div>
+                    <div key={index} className={s.day}>
+                        {item}
+                    </div>
                 ))}
             </div>
-            <div className={s["units"]}>
-                {
-                    units.map((item: any, index: number) => (
-                        <DefaultDateUnitRenderer key={index} {...item} />
-                    ))
-                }
+            <div className={s.units}>
+                {units.map((item: any, index: number) => (
+                    <DefaultDateUnitRenderer key={index} {...item} />
+                ))}
+            </div>
+            <div className={s.right_icons}>
+                <ImageIcons
+                    size={32}
+                    className={s.prev}
+                    type="arrow-left"
+                    onClick={handleGoPrevMonth}
+                />
+                <ImageIcons
+                    size={32}
+                    className={s.next}
+                    type="arrow-right"
+                    onClick={handleGoNextMonth}
+                />
             </div>
         </div>
-    )
+    );
 }
