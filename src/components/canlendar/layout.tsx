@@ -129,19 +129,19 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
         ))}
       </div>
       <div className={s.right_icons}>
-          <ImageIcons
-            size={32}
-            className={s.prev}
-            type='arrow-left'
-            onClick={handleGoPrevMonth}
-          />
-          <ImageIcons
-            size={32}
-            className={s.next}
-            type='arrow-right'
-            onClick={handleGoNextMonth}
-          />
-        </div>
+        <ImageIcons
+          size={32}
+          className={s.prev}
+          type="arrow-left"
+          onClick={handleGoPrevMonth}
+        />
+        <ImageIcons
+          size={32}
+          className={s.next}
+          type="arrow-right"
+          onClick={handleGoNextMonth}
+        />
+      </div>
     </div>
   );
 }
