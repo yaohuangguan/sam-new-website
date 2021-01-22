@@ -7,3 +7,5 @@ export interface CanlendarLayoutProps {
 export interface UnitProps {
   date: Dayjs;
 }
+
+declare module "@tony801015/chinese-lunar"
