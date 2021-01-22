@@ -3,14 +3,14 @@ import cn from "classnames";
 import { CanlendarLayoutProps, UnitProps } from "./index";
 import { ImageIcons } from "../../utils/dom-assets/index";
 import s from "./layout.module.scss";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 // @ts-ignore
 import lunar from '@tony801015/chinese-lunar'
 
 // 网格渲染器
 const DefaultUnitRenderer = (props: any) => (
-    <div className={s["unit"]}>{props.children}</div>
+    <div className={s["unit"]} onClick={props.onClick}>{props.children}</div>
 );
 
 // 网格基准渲染器
@@ -35,7 +35,7 @@ const DefaultDateRenderer = (props: any) =>
 // 农历渲染器
 const DefaultLunarRenderer = (props: any) => {
     const L = lunar(...props.date.format('YYYY-MM-DD').split('-')).getJson()
-    console.log(L)
+    // console.log(props.date.format('YYYY-MM-DD'), L.animal)
     // lunarDay
     return (
         <span className={s["lunar"]}>{L.lunarDay}</span>
@@ -88,7 +88,7 @@ export function DefaultDateUnitRenderer(props: UnitProps) {
 // 日历网格
 export function CanlendarLayout(props: CanlendarLayoutProps) {
     // props
-    const { settings } = props;
+    const { settings, onChange } = props;
     const { firstDayToShow } = settings;
 
     // states
@@ -109,7 +109,6 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
     //     isToday: baseDate.isSame(currentDate),
     //     isInMonth: baseDate.isSame(baseDate, "month")
     // }])
-
 
     // effects
     useEffect(() => {
@@ -150,6 +149,9 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
     function handleGoNextMonth() {
         setBaseDate(baseDate.add(1, 'month').startOf('date'))
     }
+    function handleUnitClick(date: Dayjs) {
+        onChange && onChange(date)
+    }
 
     return (
         <div className={s.layout}>
@@ -166,7 +168,11 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
             </div>
             <div className={s.units}>
                 {units.map((item: any, index: number) => (
-                    <DefaultDateUnitRenderer key={index} {...item} />
+                    <DefaultDateUnitRenderer
+                        key={index}
+                        {...item}
+                        onClick={() => handleUnitClick(item.date)}
+                    />
                 ))}
             </div>
             <div className={s.right_icons}>

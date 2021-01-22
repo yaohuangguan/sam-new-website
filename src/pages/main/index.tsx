@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // import { RouterProps } from 'react-router'
 import { connect } from "react-redux";
+import dayjs, { Dayjs } from 'dayjs'
 import { CanlendarLayout } from "../../components/canlendar/layout";
 import Navigation from "../../components/navigation";
 import { ImageIcons } from "../../utils/dom-assets";
+import LunarDate from './lunar-date'
 import s from "./style.module.scss";
 
 export function MainTitle(props: any) {
@@ -43,7 +45,15 @@ export function SettingTitle(props: any) {
 }
 
 export function Main(props: any) {
+  // states
+  const [hintDate, setHintDate] = useState(dayjs())
   const tools = [1, 2, 3, 4];
+
+  // functions
+  function handleCalendarChange(date: Dayjs) {
+    setHintDate(date)
+  }
+
   return (
     <Navigation
       moduleOptions={[
@@ -59,10 +69,19 @@ export function Main(props: any) {
           <MainTitle {...props} />
         </div>
         <div className={s["layout-c"]}>
-          <CanlendarLayout {...props} />
+          <CanlendarLayout {...props} onChange={handleCalendarChange} />
         </div>
         <div className={s["layout-b"]}>
+
           <ul className={s["tools"]}>
+            <li className={s["tool"]}>
+              <LunarDate date={hintDate} />
+            </li>
+            <li className={s["tool"]}>
+              {/* 测试入口 */}
+              <button onClick={() => props.history.push(`/main/marker/create/${hintDate.format('YYYY-MM-DD')}`)}>添加标志</button>
+            </li>
+
             {tools.map((item: any, index: number) => (
               <li key={index} className={s["tool"]}>
                 tools {index} @todo
