@@ -47,10 +47,17 @@ export function Main(props: any) {
   return (
     <Navigation
       moduleOptions={[
+<<<<<<< HEAD
         { name: "最近", route: "/main/setting", icon: "arrow-right" },
         { name: "事项", route: "/main/setting", icon: "arrow-right" },
         { name: "天气", route: "/main/setting", icon: "arrow-right" },
         { name: "我的", route: "/main/setting", icon: "arrow-right" },
+=======
+        { name: "最近", route: "/main/settings", icon: "arrow-right" },
+        { name: "事项", route: "/main/settings", icon: "arrow-right" },
+        { name: "天气", route: "/main/settings", icon: "arrow-right" },
+        { name: "我的", route: "/main/settings", icon: "arrow-right" },
+>>>>>>> upstream/main
       ]}
       {...props}
     >
