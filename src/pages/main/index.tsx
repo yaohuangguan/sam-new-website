@@ -2,7 +2,7 @@ import React from 'react'
 // import { RouterProps } from 'react-router'
 import { connect } from 'react-redux'
 import { CanlendarLayout } from '../../components/canlendar/layout'
-
+import { ImageIcons } from '../../utils/dom-assets'
 import s from './style.module.scss'
 
 export function MainTitle(props: any) {
@@ -15,7 +15,7 @@ export function MainTitle(props: any) {
                     onClick={() => {
                         props.history.push('/main/setting')
                     }}>
-                    <span className={s['setting-icon']} />
+                    <ImageIcons type='settings' size={64} className={s['setting-icon']} />
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@ export function SettingTitle(props: any) {
                     onClick={() => {
                         props.history.go(-1)
                     }}>
-                    <span className={s['setting-icon']} />
+                    <ImageIcons type='settings' size={64} className={s['setting-icon']} />
                 </div>
             </div>
             <div className={s["c"]}>Setting</div>
