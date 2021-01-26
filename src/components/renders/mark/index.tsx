@@ -9,11 +9,7 @@ export const DefaultMarkRenderer = (props: any) => {
             {
                 marks.length ?
                     <div className={s["marks"]}>
-                        {
-                            marks.map((item: any, index: number) =>
-                                <div className={s["mark"]} key={index} />
-                            )
-                        }
+                        <div className={s["mark"]} />
                     </div>
                     : null
             }

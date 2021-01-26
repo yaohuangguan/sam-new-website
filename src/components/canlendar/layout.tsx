@@ -90,7 +90,7 @@ export function DefaultDateUnitRenderer(props: UnitProps) {
 // 日历网格
 export function CanlendarLayout(props: CanlendarLayoutProps) {
     // props
-    const { settings, onChange } = props;
+    const { frontDate, settings } = props;
     const { firstDayToShow } = settings;
 
     // states
@@ -98,68 +98,16 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
     let weeks = `日一二三四五六`.split("");
     weeks = weeks.concat(weeks.splice(0, firstDayToShow));
 
-    // 这个月
-    const [currentDate, setCurrentDate] = useState(
-        dayjs(dayjs().startOf("date"))
-    );
-    const [baseDate, setBaseDate] = useState(currentDate);
-    const [units, setUnits] = useState<any>([]);
-
-    // @notice unit test dont delete
-    // const [units, setUnits] = useState<any>([{
-    //     date: baseDate,
-    //     isToday: baseDate.isSame(currentDate),
-    //     isInMonth: baseDate.isSame(baseDate, "month")
-    // }])
-
-    // effects
-    useEffect(() => {
-        const firstDate = baseDate.startOf("month")
-        const lastDate = baseDate.endOf('month')
-        const indexOfFirstDate = firstDate.get('day')
-        const indexOfLastDate = lastDate.get('day')
-        const tunits = []
-        let headUnit = dayjs(firstDate).add(-indexOfFirstDate + firstDayToShow, 'day')
-        let tailUnit = dayjs(lastDate).add(6 - indexOfLastDate + firstDayToShow, 'day')
-        while (headUnit < tailUnit) {
-            tunits.push({
-                date: headUnit,
-                isToday: headUnit.isSame(currentDate),
-                isInMonth: headUnit.isSame(baseDate, "month"),
-                marks: [0, 1]
-            })
-            headUnit = headUnit.add(1, 'day')
-        }
-        setUnits(tunits)
-    }, [baseDate])
+    const { units = [] } = props;
+    const { onUnitClick, onGoNextMonth, onGoPrevMonth } = props
 
     // memos
-    const baseDateFormat = useMemo(() => baseDate.format("YYYY-MM"), [baseDate]);
-
-    // functions
-    function handleGoPrevMonth() {
-        setBaseDate(baseDate.add(-1, 'month').startOf('date'))
-        // Notification.requestPermission()
-        // Notification.permission
-        // Notification.requestPermission(function(){
-        // })
-        // new Notification("title");
-        // .then(function (result) {
-        //     // result可能是是granted, denied, 或default.
-        //     console.log(result)
-        // });
-    }
-    function handleGoNextMonth() {
-        setBaseDate(baseDate.add(1, 'month').startOf('date'))
-    }
-    function handleUnitClick(date: Dayjs) {
-        onChange && onChange(date)
-    }
+    const frontDateFormat = useMemo(() => frontDate.format('YYYY-MM'), [frontDate])
 
     return (
         <div className={s.layout}>
             <div className={s.title}>
-                <div className={s.left}>{baseDateFormat}</div>
+                <div className={s.left}>{frontDateFormat}</div>
                 <div className={s.center}></div>
             </div>
             <div className={s.days}>
@@ -174,7 +122,9 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
                     <DefaultDateUnitRenderer
                         key={index}
                         {...item}
-                        onClick={() => handleUnitClick(item.date)}
+                        onClick={() =>
+                            onUnitClick && onUnitClick(item.date)
+                        }
                     />
                 ))}
             </div>
@@ -183,13 +133,17 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
                     size={32}
                     className={s.prev}
                     type="arrow-left"
-                    onClick={handleGoPrevMonth}
+                    onClick={() =>
+                        onGoPrevMonth && onGoPrevMonth()
+                    }
                 />
                 <ImageIcons
                     size={32}
                     className={s.next}
                     type="arrow-right"
-                    onClick={handleGoNextMonth}
+                    onClick={() =>
+                        onGoNextMonth && onGoNextMonth()
+                    }
                 />
             </div>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 export const ImageIcons = ({
   type = "",
-  onClick = () => {},
+  onClick = (e: React.MouseEvent) => { },
   size = 64,
   className = "",
 }): any => {

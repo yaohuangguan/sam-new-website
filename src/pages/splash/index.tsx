@@ -16,7 +16,7 @@ export default function Splash(props: RouterProps) {
             }
         }, 1000)
         return () => {
-            tk && clearInterval(tk)
+            tk && clearTimeout(tk)
         }
     }, [seconds])
 

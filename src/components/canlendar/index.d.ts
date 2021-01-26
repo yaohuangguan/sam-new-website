@@ -2,7 +2,11 @@ import dayjs, { Dayjs } from "dayjs";
 
 export interface CanlendarLayoutProps {
   settings: any;
-  onChange: (Dayjs) => void;
+  units: any;
+  frontDate: Dayjs;
+  onUnitClick: (Dayjs) => void;
+  onGoNextMonth: () => void;
+  onGoPrevMonth: () => void;
 }
 
 export interface UnitProps {

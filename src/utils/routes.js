@@ -1,7 +1,7 @@
 import Splash from '../pages/splash'
 import Main from '../pages/main'
 import Setting from '../pages/setting'
-import { CrateMarker, CreateMarker, UpdateMarker } from '../pages/mark'
+import { MarkList, CreateMark, UpdateMark } from '../pages/mark'
 
 // 路由表
 export const routes = [
@@ -28,16 +28,23 @@ export const routes = [
         timeout: 132,
       },
       {
+        path: '/main/marker/list',
+        name: '标志列表',
+        component: MarkList,
+        effect: 'right',
+        timeout: 132,
+      },
+      {
         path: '/main/marker/create/:date',
         name: '创建标志',
-        component: CreateMarker,
+        component: CreateMark,
         effect: 'right',
         timeout: 132,
       },
       {
         path: '/main/marker/update/:id',
         name: '修改标志',
-        component: UpdateMarker,
+        component: UpdateMark,
         effect: 'right',
         timeout: 132,
       },

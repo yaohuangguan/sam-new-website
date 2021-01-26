@@ -2,7 +2,7 @@ import React from 'react'
 
 import s from "./style.module.scss";
 
-export function UpdateMarker(props: any) {
+export function UpdateMark(props: any) {
     function handleGoBack() {
         props.history.go(-1)
     }
