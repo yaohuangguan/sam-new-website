@@ -10,4 +10,18 @@
     display: flex;
     flex-direction: column;
   }
+  &-c {
+    padding: 24px 0 12px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+select {
+  height: 32px;
+}
+
+.option {
+  padding: 16px;
+  margin-bottom: 12px;
 }

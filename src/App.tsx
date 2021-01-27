@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router } from "react-router-dom";
 
 import { renderRoutes, routes, handleResizeDocument } from "./utils";
+// 引入转场动画
+import './styles/transition.page.css'
 
 export function App() {
   const [rect, setRect] = useState(handleResizeDocument());

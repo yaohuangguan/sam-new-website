@@ -5,7 +5,7 @@ import { INavigationProps, ModuleOption } from "./defined";
 
 const Navigation = (props: any) => {
   const { moduleOptions } = props;
-    console.log('props', props)
+    // console.log('props', props)
   return (
     <Fragment>
       {props.children}
