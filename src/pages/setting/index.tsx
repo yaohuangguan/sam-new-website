@@ -4,27 +4,47 @@ import { connect, DispatchProp } from 'react-redux'
 import s from './style.module.scss'
 
 import { SettingTitle } from '../main'
-import { setFirstDayShow } from '../../redux/settings'
+import { setFirstDayShow, setUnitInMonth } from '../../redux/settings'
 
 export function Setting(props: any) {
-    const { settings } = props;
-    
-    function handleSetFirstDayShow(index: number) {
-        props.setFirstDayShow(index)
+    // props
+    const { settings, setFirstDayShow, setUnitInMonth } = props;
+
+    // functions
+    function handleSetFirstDayShow(e: React.ChangeEvent<HTMLSelectElement>) {
+        setFirstDayShow(e.target.value)
     }
+
     return (
         <div className={s.layout}>
             <div className={s["layout-t"]}>
                 <SettingTitle {...props} />
             </div>
-            {settings.firstDayToShow}
-            <div onClick={() => handleSetFirstDayShow(0)}>设置周日为星期的第一天</div>
-            <div onClick={() => handleSetFirstDayShow(1)}>设置周一为星期的第一天</div>
-            <div onClick={() => handleSetFirstDayShow(2)}>设置周二为星期的第一天</div>
-            <div onClick={() => handleSetFirstDayShow(3)}>设置周三为星期的第一天</div>
-            <div onClick={() => handleSetFirstDayShow(4)}>设置周四为星期的第一天</div>
-            <div onClick={() => handleSetFirstDayShow(5)}>设置周五为星期的第一天</div>
-            <div onClick={() => handleSetFirstDayShow(6)}>设置周六为星期的第一天</div>
+            <div className={s["layout-c"]}>
+                <div className={s["option"]}>
+                    每周的第一天显示：
+                    <select
+                        value={settings.firstDayToShow}
+                        onChange={handleSetFirstDayShow}>
+                        <option value={0}>周日</option>
+                        <option value={1}>周一</option>
+                        <option value={2}>周二</option>
+                        <option value={3}>周三</option>
+                        <option value={4}>周四</option>
+                        <option value={5}>周五</option>
+                        <option value={6}>周六</option>
+                    </select>
+                </div>
+                <div className={s["option"]}>
+                    <label htmlFor="">
+                        {settings.unitInMonth ? '显示非当月数据' : '隐藏非当月数据'}
+                        <input type="checkbox"
+                            checked={settings.unitInMonth}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUnitInMonth(e.target.checked)}
+                        />
+                    </label>
+                </div>
+            </div>
         </div>
     )
 }
@@ -34,6 +54,7 @@ export default connect(
         settings: state.settings
     }),
     (dispatch: any) => ({
-        setFirstDayShow: (data: any) => setFirstDayShow(dispatch, data)
+        setFirstDayShow: (data: any) => setFirstDayShow(dispatch, data),
+        setUnitInMonth: (data: any) => setUnitInMonth(dispatch, data)
     })
 )(Setting);
