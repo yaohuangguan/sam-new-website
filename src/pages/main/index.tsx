@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 // import { RouterProps } from 'react-router'
 import { connect } from "react-redux";
 import dayjs, { Dayjs } from 'dayjs'
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router'
 import { CanlendarLayout } from "../../components/canlendar/layout";
 import Navigation from "../../components/navigation";
 import { ImageIcons } from "../../utils/dom-assets";
@@ -14,6 +16,7 @@ export function MainTitle(props: any) {
     <div className={s["title"]}>
       <div className={s["c"]}>Fantastic Canlendar</div>
       <div className={s["r"]}>
+        {/* <Link to="/">go /</Link> */}
         <div
           className={s.setting}
           onClick={() => {
@@ -60,7 +63,7 @@ export function Main(props: any) {
   // effects
   useEffect(() => {
     handleInitUnits(baseDate)
-  }, [baseDate])
+  }, [baseDate, props.location.pathname])
 
   // functions
   function testH5Notice() {
@@ -91,58 +94,59 @@ export function Main(props: any) {
     setBaseDate(baseDate.add(1, 'month').startOf('date'))
   }
   function handleUnitClick(date: Dayjs) {
-    setBaseDate(date)
     setHintDate(date)
   }
 
   return (
-    <Navigation
-      moduleOptions={[
-        { name: "最近", route: "/main/settings", icon: "arrow-right" },
-        { name: "事项", route: "/main/settings", icon: "arrow-right" },
-        { name: "天气", route: "/main/settings", icon: "arrow-right" },
-        { name: "我的", route: "/main/settings", icon: "arrow-right" },
-      ]}
-      {...props}
-    >
-      <div className={s.layout}>
-        <div className={s["layout-t"]}>
-          <MainTitle {...props} />
-        </div>
-        <div className={s["layout-c"]}>
-          <CanlendarLayout
-            units={units}
-            settings={settings}
-            frontDate={frontDate}
-            onGoPrevMonth={handleGoPrevMonth}
-            onGoNextMonth={handleGoNextMonth}
-            onUnitClick={handleUnitClick}
-          />
-        </div>
-        <div className={s["layout-b"]}>
-
-          <ul className={s["tools"]}>
-            <li className={s["tool"]}>
-              <LunarDate date={frontDate} />
-            </li>
-            <li className={s["tool"]}>
-              {/* 测试入口 */}
-              <button onClick={() => props.history.push(`/main/marker/list`)}>标志管理</button>
-              <button onClick={() => props.history.push(`/main/marker/create/${baseDate.format('YYYY-MM-DD')}`)}>添加标志</button>
-            </li>
-
-            {tools.map((item: any, index: number) => (
-              <li key={index} className={s["tool"]}>
-                tools {index} @todo
-              </li>
-            ))}
-          </ul>
-        </div>
+    <div className={s.layout}>
+      <div className={s["layout-t"]}>
+        <MainTitle {...props} />
       </div>
-    </Navigation>
+      <div className={s["layout-c"]}>
+        <CanlendarLayout
+          units={units}
+          settings={settings}
+          frontDate={frontDate}
+          onGoPrevMonth={handleGoPrevMonth}
+          onGoNextMonth={handleGoNextMonth}
+          onUnitClick={handleUnitClick}
+        />
+      </div>
+      <div className={s["layout-b"]}>
+
+        <ul className={s["tools"]}>
+          <li className={s["tool"]}>
+            <LunarDate date={hintDate} />
+          </li>
+          <li className={s["tool"]}>
+            {/* 测试入口 */}
+            Tool 1
+            <button onClick={() => props.history.push(`/main/marker/list`)}>标志管理</button>
+            <button onClick={() => props.history.push(`/main/marker/create/${hintDate.format('YYYY-MM-DD')}`)}>添加标志</button>
+          </li>
+          {tools.map((item: any, index: number) => (
+            <li key={index} className={s["tool"]}>
+              Tool {index + 2} @todo
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
 
 export default connect((state: any) => ({
   settings: state.settings,
 }))(Main);
+
+
+// <Navigation
+//   moduleOptions={[
+//     { name: "最近", route: "/main/settings", icon: "arrow-right" },
+//     { name: "事项", route: "/main/settings", icon: "arrow-right" },
+//     { name: "天气", route: "/main/settings", icon: "arrow-right" },
+//     { name: "我的", route: "/main/settings", icon: "arrow-right" },
+//   ]}
+//   {...props}
+// >
+// </Navigation>
