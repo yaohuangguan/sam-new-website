@@ -3,7 +3,8 @@ import { RouterProps } from 'react-router'
 import { connect, DispatchProp } from 'react-redux'
 import s from './style.module.scss'
 
-import { SettingTitle } from '../main'
+// self compoents
+import { Title } from './setting-title'
 import { setFirstDayShow, setUnitInMonth } from '../../redux/settings'
 
 export function Setting(props: any) {
@@ -18,7 +19,7 @@ export function Setting(props: any) {
     return (
         <div className={s.layout}>
             <div className={s["layout-t"]}>
-                <SettingTitle {...props} />
+                <Title {...props} />
             </div>
             <div className={s["layout-c"]}>
                 <div className={s["option"]}>

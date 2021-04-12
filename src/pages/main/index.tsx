@@ -2,51 +2,18 @@ import React, { useState, useEffect } from "react";
 // import { RouterProps } from 'react-router'
 import { connect } from "react-redux";
 import dayjs, { Dayjs } from 'dayjs'
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router'
+
+// self compoennts
 import { CanlendarLayout } from "../../components/canlendar/layout";
-import Navigation from "../../components/navigation";
-import { ImageIcons } from "../../utils/dom-assets";
 import LunarDate from './lunar-date'
+import { Title } from './main-title'
+
+
+// functions
 import { initDates, getMarksByDate } from '../../apis'
+
+// styles
 import s from "./style.module.scss";
-
-export function MainTitle(props: any) {
-  return (
-    <div className={s["title"]}>
-      <div className={s["c"]}>Fantastic Canlendar</div>
-      <div className={s["r"]}>
-        {/* <Link to="/">go /</Link> */}
-        <div
-          className={s.setting}
-          onClick={() => {
-            props.history.push("/main/setting");
-          }}
-        >
-          <ImageIcons type="settings" size={64} className={s["setting-icon"]} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function SettingTitle(props: any) {
-  return (
-    <div className={s["title"]}>
-      <div className={s["l"]}>
-        <div
-          className={s.setting}
-          onClick={() => {
-            props.history.go(-1);
-          }}
-        >
-          <ImageIcons type="settings" size={64} className={s["setting-icon"]} />
-        </div>
-      </div>
-      <div className={s["c"]}>Setting</div>
-    </div>
-  );
-}
 
 export function Main(props: any) {
   // props
@@ -66,14 +33,14 @@ export function Main(props: any) {
   }, [baseDate, props.location.pathname])
 
   // functions
-  function testH5Notice() {
-    // @notice unit test dont delete
-    // const [units, setUnits] = useState<any>([{
-    //     date: baseDate,
-    //     isToday: baseDate.isSame(currentDate),
-    //     isInMonth: baseDate.isSame(baseDate, "month")
-    // }])
-  }
+  // function testH5Notice() {
+  //   @notice unit test dont delete
+  //   const [units, setUnits] = useState<any>([{
+  //       date: baseDate,
+  //       isToday: baseDate.isSame(currentDate),
+  //       isInMonth: baseDate.isSame(baseDate, "month")
+  //   }])
+  // }
   function handleInitUnits(date: Dayjs) {
     // 在server端初始化日期，server端下发日历数据
     // const p1 = getMarksByDate(date.toString())
@@ -100,7 +67,7 @@ export function Main(props: any) {
   return (
     <div className={s.layout}>
       <div className={s["layout-t"]}>
-        <MainTitle {...props} />
+        <Title {...props} />
       </div>
       <div className={s["layout-c"]}>
         <CanlendarLayout
@@ -138,15 +105,3 @@ export function Main(props: any) {
 export default connect((state: any) => ({
   settings: state.settings,
 }))(Main);
-
-
-// <Navigation
-//   moduleOptions={[
-//     { name: "最近", route: "/main/settings", icon: "arrow-right" },
-//     { name: "事项", route: "/main/settings", icon: "arrow-right" },
-//     { name: "天气", route: "/main/settings", icon: "arrow-right" },
-//     { name: "我的", route: "/main/settings", icon: "arrow-right" },
-//   ]}
-//   {...props}
-// >
-// </Navigation>

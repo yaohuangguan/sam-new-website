@@ -36,6 +36,7 @@ export function initDates(date: Dayjs, settings: any) {
       -indexOfFirstDate + firstDayToShow,
       "day"
     );
+    // console.log(all, headUnit.toString())
     while (headUnit < tailUnit) {
       tunits.push({
         date: headUnit,
