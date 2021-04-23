@@ -1,12 +1,14 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect, useContext } from 'react'
 import ReactDOM from 'react-dom'
 import { matchPath } from 'react-router'
 import uuidv4 from 'uuid/dist/v4'
 import { Route } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
-import { Provider } from 'react-redux'
-import { Layout } from '../layout'
+import { Provider, ReactReduxContext, connect } from 'react-redux'
+
+import { ThemeProvider } from "@material-ui/styles";
 import { store } from '../../redux'
+import { Layout } from '../layout'
 import style from './style.module.scss'
 
 /**
@@ -104,13 +106,21 @@ export function generateUUIDV4() {
 }
 
 export function Page(props) {
-  const { rect: { width, height }, children } = props
+  // props
+  const { rect: { width, height }, children, theme } = props
+
   return (
     <div style={{ width, height }}>
-      {children}
+      <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
     </div>
   )
 }
+
+const ThemedPage = connect(state => ({
+  theme: state.settings.theme
+}))(Page)
 
 /**
  * 路由渲染
@@ -134,16 +144,16 @@ export function renderRoutes(routes, superProps) {
                 classNames={item.effect}
                 timeout={item.timeout}
               >
-                <Page {...superProps}>
-                  <Provider store={store}>
+                <Provider store={store}>
+                  <ThemedPage {...superProps}>
                     <item.component
                       key={index}
                       {...superProps}
                       {...props}
                       translucent={item.translucent}
                     />
-                  </Provider>
-                </Page>
+                  </ThemedPage>
+                </Provider>
               </CSSTransition>
             </PortalDOMHooks>
           )
@@ -153,8 +163,6 @@ export function renderRoutes(routes, superProps) {
     ]
   })
 }
-
-
 
 /**
  * 从route path获取路由信息
