@@ -14,7 +14,6 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemText,
   Button,
 } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { CanlendarLayoutProps } from "./index";
 
 // uikit
-import { IconButton } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
 
 // styles
@@ -31,10 +31,9 @@ export function CanlendarLayout(props: CanlendarLayoutProps) {
 
   return (
     <div className={s.layout}>
-      <div className={s.title}>
-        <div className={s.left}>{frontDateFormat}</div>
-        <div className={s.center}></div>
-      </div>
+      <Typography variant="h6">
+        {frontDateFormat}
+      </Typography>
       <div className={s.days}>
         {weeks.map((item: any, index) => (
           <div key={index} className={s.day}>
