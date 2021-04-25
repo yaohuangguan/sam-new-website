@@ -1,124 +1,14 @@
-import React, { useState, useEffect, PropsWithChildren, useMemo } from "react";
-import cn from "classnames";
-import { CanlendarLayoutProps, UnitProps } from "./index";
-import { ImageIcons } from "../../utils/dom-assets/index";
-import s from "./layout.module.scss";
-import dayjs, { Dayjs } from "dayjs";
+import React, { useMemo } from "react";
+import { CanlendarLayoutProps } from "./index";
 
 // uikit
-import {
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  Box,
-} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import * as Icons from "@material-ui/icons";
 
-import { DefaultMarkRenderer } from "../renders/mark";
+// styles
+import s from "./layout.module.scss";
 
-// @ts-ignore
-import lunar from "@tony801015/chinese-lunar";
-
-// 网格渲染器
-const DefaultUnitRenderer = (props: any) => (
-  //   <div className={s["unit"]} onClick={props.onClick}>
-  //     {props.children}
-  //   </div>
-  <Box className={s.unit} onClick={props.onClick}>
-    {props.children}
-  </Box>
-);
-
-// 网格基准渲染器
-const DefaultBaseRenderer = (props: any) => (
-  //   <div className={s["base"]}>{props.children}</div>
-  <Box>{props.children}</Box>
-);
-
-// 今日数字渲染器
-const DefaultTodayRenderer = (props: any) => (
-  <Typography
-    className={cn(s["today"], {
-      [s["active"]]: props.isToday,
-      [s["outside"]]: !props.isInMonth,
-    })}
-  >
-    {/* <div
-      className={cn(s["today"], {
-        [s["active"]]: props.isToday,
-        [s["outside"]]: !props.isInMonth,
-      })}
-    >
-    </div> */}
-    {props.children}
-  </Typography>
-);
-
-// 普通日数字渲染器
-const DefaultDateRenderer = (props: any) => (
-  <span className={s["date"]}>{props.date.get("date")}</span>
-);
-
-// 农历渲染器
-const DefaultLunarRenderer = (props: any) => {
-  const L = lunar(...props.date.format("YYYY-MM-DD").split("-")).getJson();
-  // console.log(props.date.format('YYYY-MM-DD'), L.animal)
-  // lunarDay
-  return (
-    <Typography variant="caption" display="block">
-      {L.lunarDay}
-    </Typography>
-  );
-  return <span className={s["lunar"]}>{L.lunarDay}</span>;
-};
-
-// Unit渲染器
-export function DefaultDateUnitRenderer(props: UnitProps) {
-  const renderMaps = {
-    fn: [
-      {
-        type: 1,
-        fn: [DefaultDateRenderer, DefaultLunarRenderer],
-      },
-      DefaultTodayRenderer,
-      DefaultMarkRenderer,
-      DefaultBaseRenderer,
-      DefaultUnitRenderer,
-    ],
-  };
-  function render(item: any, superIndex: number) {
-    const { type, fn } = item;
-    if (type === 1) {
-      return fn.map((next: any, index: number) => {
-        if (typeof next === "function") {
-          const F = next;
-          return <F key={index} {...props} />;
-        } else {
-          return render(next, index);
-        }
-      });
-    } else {
-      return (
-        fn &&
-        fn.reduce((prev: any, next: any, index: number) => {
-          if (typeof next === "function") {
-            const F = next;
-            return (
-              <F {...props} key={superIndex}>
-                {prev}
-              </F>
-            );
-          } else {
-            return render(next, index);
-          }
-        }, null)
-      );
-    }
-  }
-  return render(renderMaps, 0);
-}
+import { DefaultDateUnitRenderer } from "../renders";
 
 // 日历网格
 export function CanlendarLayout(props: CanlendarLayoutProps) {
