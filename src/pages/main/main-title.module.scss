@@ -1,0 +1,22 @@
+.title {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  .l {
+    flex-shrink: 0;
+    margin-right: 12px;
+  }
+  .c {
+    flex: 1;
+  }
+  .r {
+    margin-left: 12px;
+    flex-shrink: 0;
+  }
+}
+
+.setting-icon {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+}
