@@ -16,30 +16,13 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Switch from "@material-ui/core/Switch";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import { Paper, Divider } from "@material-ui/core";
 
 import * as Icons from "@material-ui/icons";
 
 // self compoents
 
-import {
-  setFirstDayShow,
-  setUnitInMonth,
-  setUseDakTheme,
-} from "../../redux/settings";
-
-// types
-enum WeekDayName {
-  "周日" = 0,
-  "周一" = 1,
-  "周二" = 2,
-  "周三" = 3,
-  "周四" = 4,
-  "周五" = 5,
-  "周六" = 6,
-}
+import { setUseDakTheme } from "../../redux/settings";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -69,16 +52,11 @@ const useStyles = makeStyles((theme) => ({
 
 export function Setting(props: any) {
   // props
-  const { settings, setFirstDayShow, setUnitInMonth, setUseDakTheme } = props;
+  const { settings, setUseDakTheme } = props;
 
   // states
   const classes = useStyles();
 
-  // functions
-  function handleSetFirstDayShow(e: React.ChangeEvent<any>) {
-    console.log(e);
-    setFirstDayShow(e.target.value);
-  }
   function handleGoBack() {
     props.history.go(-1);
   }
@@ -137,71 +115,6 @@ export function Setting(props: any) {
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider component="li" />
-
-              <ListSubheader
-                classes={{
-                  root: classes.listSubHeaderRoot,
-                }}
-              >
-                背景
-              </ListSubheader>
-              <ListItem>
-                <ListItemIcon>
-                  <Icons.ImageSearch />
-                </ListItemIcon>
-                <ListItemText primary="暗黑" />
-                <ListItemSecondaryAction>
-                  <Switch
-                    edge="end"
-                    checked={settings.useDarkTheme}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setUseDakTheme(e.target.checked);
-                    }}
-                  />
-                </ListItemSecondaryAction>
-              </ListItem>
-              <Divider component="li" />
-
-              <ListSubheader
-                classes={{
-                  root: classes.listSubHeaderRoot,
-                }}
-              >
-                日历
-              </ListSubheader>
-              <ListItem>
-                <ListItemIcon>
-                  <Icons.LineWeightSharp />
-                </ListItemIcon>
-                <ListItemText primary="第一天展示" />
-                <ListItemSecondaryAction>
-                  <Select
-                    value={settings.firstDayToShow}
-                    onChange={handleSetFirstDayShow}
-                  >
-                    {[0, 1, 2, 3, 4, 5, 6].map((item: any, index: number) => (
-                      <MenuItem value={item} key={index}>
-                        {WeekDayName[item]}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <Icons.Flight />
-                </ListItemIcon>
-                <ListItemText primary="显示非当月数据" />
-                <ListItemSecondaryAction>
-                  <Switch
-                    edge="end"
-                    checked={settings.unitInMonth}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setUnitInMonth(e.target.checked);
-                    }}
-                  />
-                </ListItemSecondaryAction>
-              </ListItem>
             </ul>
           </li>
         </List>
@@ -215,8 +128,6 @@ export default connect(
     settings: state.settings,
   }),
   (dispatch: any) => ({
-    setFirstDayShow: (data: any) => setFirstDayShow(dispatch, data),
-    setUnitInMonth: (data: any) => setUnitInMonth(dispatch, data),
     setUseDakTheme: (data: any) => setUseDakTheme(dispatch, data),
   })
 )(Setting);

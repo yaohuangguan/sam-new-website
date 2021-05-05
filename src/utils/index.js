@@ -77,4 +77,3 @@ export function handleResizeDocument() {
 export * from './portal-dom'
 export * from './routes'
 export * from './layout'
-export * from './event'
